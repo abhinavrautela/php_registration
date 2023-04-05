@@ -36,23 +36,30 @@
 			<th>Address</th>
 		</tr>
 		<?php
-		$db = new SQLite3('registration.db');
-		$query = "SELECT * FROM registrations";
-		$result = $db->query($query);
-		
-		while ($row = $result->fetchArray()) {
+        $host="localhost";
+        $user="root";
+        $password="";
+        $dbname="stu_reg";
+        $conn=mysqli_connect($host,$user,$password,$dbname);
+        if(!$conn){
+            echo "not connected";
+        }
+		$ab="select * from students_data";
+       
+		$row=mysqli_fetch_assoc($a);
 			echo "<tr>";
 			echo "<td>" . $row['student_name'] . "</td>";
 			echo "<td>" . $row['father_name'] . "</td>";
 			echo "<td>" . $row['mobile_number'] . "</td>";
             echo "<td>" . $row['dob'] . "</td>";
-			echo "<td>" . $row['email'] . "</td>";
+			echo "<td>" . $row['email_address'] . "</td>";
 			echo "<td>" . $row['branch'] . "</td>";
 			echo "<td>" . $row['address'] . "</td>";
 			echo "</tr>";
-		}
+	
 
-		$db->close();
+	
+    
 		?>
 	</table>
 </body>
