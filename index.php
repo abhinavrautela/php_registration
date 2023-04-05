@@ -14,7 +14,7 @@
         <h1>Registration Form</h1>
         <h6>Made With ❤ by Abhinav</h6>
         </div>
-        <form action="register.php" method="POST">
+        <form action="" method="POST">
          <div class="row">
         <div>
             <label for="student_name">Student Name</label>
@@ -49,7 +49,7 @@
             <label for="address">Address</label>
             <input type="text" name="address" id="address" required>
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" name="submit">Register</button>
         </form>
     </div>
 </body>
@@ -59,22 +59,38 @@
 
 <?php
 // Create connection to SQLite database
-$db = new SQLite3('registration.db');
-// Get form data and sanitize
-$student_name = SQLite3::escapeString($_POST['student_name']);
-$father_name = SQLite3::escapeString($_POST['father_name']);
-$mobile_number = SQLite3::escapeString($_POST['mobile_number']);
-$email = SQLite3::escapeString($_POST['email_address']);
-$branch = SQLite3::escapeString($_POST['branch']);
-$address = SQLite3::escapeString($_POST['address']);
-$dob = SQLite3::escapeString($_POST['dob']);
+$host="localhost";
+$user="root";
+$password="";
+$dbname="stu_reg";
+$conn=mysqli_connect($host,$user,$password,$dbname);
+if(!$conn){
+    echo "not connected";
+
+}
+
+if(isset($_POST['submit'])){
+    //Get form data and sanitize
+$student_name = ($_POST['student_name']);
+$father_name = ($_POST['father_name']);
+$mobile_number = ($_POST['mobile_number']);
+$email = ($_POST['email_address']);
+$branch = ($_POST['branch']);
+$address = ($_POST['address']);
+$dob = ($_POST['dob']);
 
 // Insert data into database
-$query = "INSERT INTO registrations (student_name, father_name, mobile_number, email, branch, address, dob) 
-VALUES ('$student_name', '$father_name', '$mobile_number', '$email', '$branch', '$address', $'dob')";
-$db->exec($query);
+$query = "INSERT INTO students_data (student_name, father_name, mobile_number, 	email_address, branch, `address`, dob) 
+VALUES ('$student_name', '$father_name', '$mobile_number', '$email', '$branch', '$address', '$dob')";
+$sql=mysqli_query($conn,$query);
+if($sql){
+echo"data inserteed";
+}else{
+    echo "not inserted dtaa";
+}
 
 // Redirect to display page
 header("Location: registrations.php");
-exit();
+}
+
 ?>
